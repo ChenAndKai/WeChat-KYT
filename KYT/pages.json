@@ -1,0 +1,72 @@
+{
+
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/index/listInfo",
+			"style": {
+				"navigationBarTitleText": "My Team"
+			}
+		},
+		{
+			"path": "pages/test/test",
+			"style": {
+				"navigationBarTitleText": "Test"
+			}
+		},		
+		{
+			"path": "pages/test/testType",
+			"style": {
+				"navigationBarTitleText": "Test"
+			}
+		},
+		{
+            "path" : "pages/addNewMember/addNewMember",
+            "style" : {
+				"navigationBarTitleText": "Add New Member"
+				}
+		},
+		{
+            "path" : "pages/memberDetail/memberDetail",
+            "style" : {}
+        },
+		{
+            "path" : "pages/memberEdit/memberEdit",
+            "style" : {}
+        }
+		,{
+		    "path" : "pages/demo/demo",
+		    "style" : {}
+		}
+    ],
+	"tabBar":{
+		"color":"#ececec",
+		"selectedColor":"#0075ff",
+		"backgroundColor":"#ffffff",
+		"list":[
+			{
+				"pagePath":"pages/test/test",
+				"iconPath":"static/tabbar/rocket_unselected.png",
+				"selectedIconPath":"static/tabbar/rocket_selected.png",
+				"text":"Test"
+			},
+			{
+				"pagePath":"pages/index/listInfo",
+				"iconPath":"static/tabbar/team_unselected.png",
+				"selectedIconPath":"static/tabbar/team_selected.png",
+				"text":"Team Member"
+			},
+			{
+					"pagePath":"pages/demo/demo",
+					"iconPath":"static/tabbar/team_unselected.png",
+					"selectedIconPath":"static/tabbar/team_selected.png",
+					"text":"demo"
+			}
+		]	
+	},
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "KYT",
+		"navigationBarBackgroundColor": "#f8f8f8",
+		"backgroundColor": "#f2f2f2"
+	}
+}
