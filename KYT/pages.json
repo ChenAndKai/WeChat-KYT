@@ -33,10 +33,6 @@
             "path" : "pages/memberEdit/memberEdit",
             "style" : {}
         }
-		,{
-		    "path" : "pages/demo/demo",
-		    "style" : {}
-		}
     ],
 	"tabBar":{
 		"color":"#ececec",
@@ -54,12 +50,6 @@
 				"iconPath":"static/tabbar/team_unselected.png",
 				"selectedIconPath":"static/tabbar/team_selected.png",
 				"text":"Team Member"
-			},
-			{
-					"pagePath":"pages/demo/demo",
-					"iconPath":"static/tabbar/team_unselected.png",
-					"selectedIconPath":"static/tabbar/team_selected.png",
-					"text":"demo"
 			}
 		]	
 	},

@@ -168,7 +168,7 @@
 						}
 					}
 					else {
-						if(this.typeIndex === 0) {	
+						if(this.typeIndex === 2) {	
 							resultInfo = 'this is ' + this.nameList[this.selectIndex] + ',' + this.nameList[this.rightAnswerIndex] + ' is the ' + (this.rightAnswerIndex + 1) + ' image';						
 						}		
 						else {
@@ -185,7 +185,7 @@
 				}
 			},			
 			questionList: function() {	
-				if(this.typeIndex === 1) {
+				if(this.typeIndex === 0) {
 					//Choose an English name according to the picture
 					this.title = 'Who is this?';	
 					this.imgPathList.push(this.array[this.rightAnswerIndex].img);
@@ -193,7 +193,7 @@
 						this.nameList.push(this.array[i].englishName);
 					}
 				}
-				else if(this.typeIndex === 2) {
+				else if(this.typeIndex === 1) {
 					//Choose an Chinese name according to the picture
 					this.title = 'Who is this?';	
 					this.imgPathList.push(this.array[this.rightAnswerIndex].img);
@@ -201,7 +201,7 @@
 						this.nameList.push(this.array[i].chineseName);
 					}					
 				}
-				else if(this.typeIndex === 0) {
+				else if(this.typeIndex === 2) {
 					//Choose an picture according to the English name	
 					this.title = 'Who is ' + this.array[this.rightAnswerIndex].englishName+'?';
 					for(let i = 0;i < this.optionNumber;i++) {
@@ -215,10 +215,10 @@
 			this.typeIndex = parseInt(option.typeIndex);	
 		},
 		onShow: function(option) {
-			if (this.typeIndex === 1 || this.typeIndex === 2) {
+			if (this.typeIndex === 0 || this.typeIndex === 1) {
 				this.optionNumber = 3;
 			}
-			else if (this.typeIndex === 0) {						
+			else if (this.typeIndex === 2) {						
 				this.optionNumber = 4;	
 			}
 			if(!this.$member.finishFlag) {
