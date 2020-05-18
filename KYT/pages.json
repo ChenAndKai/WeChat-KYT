@@ -1,6 +1,6 @@
 {
 
-	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+	"pages": [ //pages数组中第一项表示应用启动页，
 		{
 			"path": "pages/index/listInfo",
 			"style": {
@@ -23,15 +23,19 @@
             "path" : "pages/addNewMember/addNewMember",
             "style" : {
 				"navigationBarTitleText": "Add New Member"
-				}
+			}
 		},
 		{
             "path" : "pages/memberDetail/memberDetail",
-            "style" : {}
+            "style" : {
+				"navigationBarTitleText": "Member Detail Information"
+			}
         },
 		{
             "path" : "pages/memberEdit/memberEdit",
-            "style" : {}
+            "style" : {
+				"navigationBarTitleText": "Member Information Edit"
+			}
         }
     ],
 	"tabBar":{
