@@ -25,12 +25,12 @@
 				img: ''
 			}
 		},
-		onLoad:function(option){
+		onLoad: function(option) {
 			this.englishName = option.englishName;
 			var teamMembersInfo = JSON.parse(decodeURIComponent(option.teamMembers));
 			this.teamMembersInfo = teamMembersInfo;
-			for(var i = 0; i<teamMembersInfo.length; i++){
-				if(teamMembersInfo[i].englishName === this.englishName){
+			for(var i = 0; i<teamMembersInfo.length; i++) {
+				if(teamMembersInfo[i].englishName === this.englishName) {
 					this.img = teamMembersInfo[i].img;
 					this.chineseName = teamMembersInfo[i].chineseName;
 					break;
