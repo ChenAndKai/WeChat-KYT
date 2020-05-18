@@ -20,40 +20,40 @@
 			}
 		},
 		{
-            "path" : "pages/addNewMember/addNewMember",
-            "style" : {
+            		"path": "pages/addNewMember/addNewMember",
+           		 "style": {
 				"navigationBarTitleText": "Add New Member"
 			}
 		},
 		{
-            "path" : "pages/memberDetail/memberDetail",
-            "style" : {
+            		"path": "pages/memberDetail/memberDetail",
+            		"style": {
 				"navigationBarTitleText": "Member Detail Information"
 			}
-        },
+        	},
 		{
-            "path" : "pages/memberEdit/memberEdit",
-            "style" : {
+            		"path": "pages/memberEdit/memberEdit",
+            		"style": {
 				"navigationBarTitleText": "Member Information Edit"
 			}
-        }
-    ],
-	"tabBar":{
-		"color":"#ececec",
-		"selectedColor":"#0075ff",
-		"backgroundColor":"#ffffff",
-		"list":[
+        	}
+    	],
+	"tabBar": {
+		"color": "#ececec",
+		"selectedColor": "#0075ff",
+		"backgroundColor": "#ffffff",
+		"list": [
 			{
-				"pagePath":"pages/test/test",
-				"iconPath":"static/tabbar/rocket_unselected.png",
-				"selectedIconPath":"static/tabbar/rocket_selected.png",
-				"text":"Test"
+				"pagePath": "pages/test/test",
+				"iconPath": "static/tabbar/rocket_unselected.png",
+				"selectedIconPath": "static/tabbar/rocket_selected.png",
+				"text": "Test"
 			},
 			{
-				"pagePath":"pages/index/listInfo",
-				"iconPath":"static/tabbar/team_unselected.png",
-				"selectedIconPath":"static/tabbar/team_selected.png",
-				"text":"Team Member"
+				"pagePath": "pages/index/listInfo",
+				"iconPath": "static/tabbar/team_unselected.png",
+				"selectedIconPath": "static/tabbar/team_selected.png",
+				"text": "Team Member"
 			}
 		]	
 	},
