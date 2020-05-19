@@ -253,14 +253,14 @@
 	.text-box {
 		font-size: 45rpx;
 		margin:0 auto;	
-		margin-bottom: 40rpx;
+		margin-bottom: 20rpx;
 		margin-left: 40rpx;
 	}
 	.img-box {
-		width: 90%;
 		margin-bottom: 30rpx;
 	}
 	.img-box .memberImg {	
+		width: 100%;
 		height: 450rpx;
 		border-radius:15rpx;	
 	}

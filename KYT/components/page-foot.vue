@@ -34,7 +34,6 @@
 		background-color: #EEEEEE;
 		margin: 35rpx;
 		width: 650rpx;
-		height: 95rpx;
 		line-height: 95rpx; 
 		border-radius:25rpx;
 		text-align: center;
@@ -46,7 +45,7 @@
 		background-color: #F7C7C7;
 	}
 	.information-box {
-		height: 250rpx;
+		height: 220rpx;
 	}
 	.information-box text {
 		margin-top: 20rpx;

@@ -105,13 +105,13 @@
 		
 	}
 	.mode-avtor {
-			border-radius: 30rpx;
-			width: 90%;
-			margin-left: 5%;
-			height: 880rpx;
+		border-radius: 30rpx;
+		width: 90%;
+		margin-left: 5%;
+		height: 780rpx;
 	}
 	.nameStyle {
-		 text-align: center;
+		text-align: center;
 	}
 	.container-edit {
 		display: flex;

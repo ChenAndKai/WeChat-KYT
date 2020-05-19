@@ -139,7 +139,7 @@
 		border-radius: 30rpx;
 		width: 90%;
 		margin-left: 5%;
-		height: 880rpx;
+		height: 730rpx;
 	}
 	.mod-button{
 		color: #e9f3ff;
