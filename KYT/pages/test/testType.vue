@@ -43,21 +43,21 @@
 				
 				checkBoxText: 'Check', 		//Bottom button text
 				resultInfo: ' ', 									
-				checkColor: '',  			//Bottom button color
-				bgColor: '',   				//The background color at the bottom
-				color: '',    				//Bottom button text color
+				checkColor: '',  		//Bottom button color
+				bgColor: '',   			//The background color at the bottom
+				color: '',    			//Bottom button text color
 							
 				checkedFlag: false, 		//Whether you checked it
 				
 				nameList: [],											
 				imgPathList: [],
 				wrongList: [],  
-				array: [],					//List of current question information
+				array: [],			//List of current question information
 				
 				optionNumber: 3,											
 				rightAnswerIndex: -1,		
 				selectIndex: -1,	
-				typeIndex: 0,				//Question type index				
+				typeIndex: 0,			//Question type index				
 			}
 		},		
 		methods: {	 

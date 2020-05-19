@@ -27,7 +27,7 @@
 				index: 0,
 			}
 		},
-		onLoad:function(option){
+		onLoad: function(option) {
 			this.englishName = option.englishName;
 			let teamMembersInfo = JSON.parse(decodeURIComponent(option.teamMembers));
 			this.teamMembersInfo = teamMembersInfo;
