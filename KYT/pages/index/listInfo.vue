@@ -13,7 +13,6 @@
 		</view>	
 	</view>
 </template>
-
 <script>
 	import uniIcons from "@/components/uni-icons/uni-icons.vue"
 	export default {
@@ -23,12 +22,10 @@
 			}
 		},
 		methods: {
-			getDataFromStorage: function() {
-				
+			getDataFromStorage: function() {				
 				uni.getStorage({
 					key: 'member',
 					success: (res) => {
-						console.log(res);
 						let obj = JSON.parse(res.data);
 						this.teamMembersInfo = obj;
 					}

@@ -5,19 +5,20 @@
 			<uni-icons type="camera" size="30" color="#808080" class="mode-camera-icon" @click="selectImg()" ></uni-icons>
 		</view>
 		<view>
-			<input type="text" placeholder="englishName" class="mode-input" v-model="englishName"></input>
+			<input type="text" placeholder="English Name" class="mode-input" v-model="englishName"></input>
 		</view>
 		
 		<view>
-			<input type="text" placeholder="chineseName" class="mode-input" v-model="chineseName"></input>
+			<input type="text" placeholder="Chinese Name" class="mode-input" v-model="chineseName"></input>
 		</view>
 		<view>
 			<picker mode="date" v-model="birthday" :start="startDate" :end="endDate" @change="bindDateChange" color="#7f7fa0">
-				<view class="mode-input" v-if="isSelectedDate" >birthday:</view>
+				<view class="mode-input" v-if="isSelectedDate" >Birthday:</view>
 				<view class="mode-input" v-if="!isSelectedDate" > {{birthday}}</view>
 			</picker>
 		</view>
 		<button class="mod-button" @click = "saveData()">Add</button>
+		<view class="blank"></view>
 	</view>
 </template>
 
@@ -71,7 +72,7 @@
 					this.showModal('You have already uploaded this information.');
 				}	
 				if(this.englishName === '' || this.imgPath === '' || this.chineseName === '') {				
-					this.showModal('Name or photo or chineseName is empty.');
+					this.showModal('Name or photo or chineseName\r\n is empty.');
 				}
 				else {
 					this.updateOrAdd();				
@@ -133,7 +134,7 @@
 			},
 			bindDateChange: function(e) {
 				this.isSelectedDate = false;
-			    this.date = e.target.value
+			    this.birthday = e.target.value
 			},
 			getDate(type) {
 			    const date = new Date();
@@ -188,8 +189,7 @@
 		margin-left: 10%;
 		color: #cacaca;
 		position: relative;
-		margin-top: 50rpx;
-		
+		margin-top: 50rpx;	
 	}
 	.mod-button{
 		color: #e9f3ff;

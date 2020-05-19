@@ -134,7 +134,6 @@
 	}
 	.blank {
 		flex: 1;
-		min-height: 20rpx;
 	}
 	.testButton {
 		width: 80%;

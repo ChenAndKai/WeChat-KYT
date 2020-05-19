@@ -1,9 +1,19 @@
 <template>
 	<view class="content">
 		<image :src="member.img" class="mod-head-photo" @click="selectImage"></image>
-		<input type="text" class="mode-input" v-model="member.englishName"></input>
-		<input type="text" class="mode-input" v-model="member.chineseName"></input>
+		<view class="mode-input-view">
+			English Name:<input class="mode-input" type="text" v-model="member.englishName"></input>
+		</view>
+		<view class="mode-input-view">
+			Chinese Name:<input class="mode-input" type="text" v-model="member.chineseName"></input>
+		</view>
+		<view  class="mode-input-view">
+			<picker mode="date" :start="startDate" :end="endDate" @change="bindDateChange" color="#7f7fa0">
+				Birthday:  {{member.birthday === undefined ? '':member.birthday}}
+			</picker>
+		</view>
 		<button class="mod-button" @click="upDate()">Update</button>
+		<view class="blank"></view>
 	</view>
 </template>
 
@@ -17,7 +27,9 @@
 					englishName: '',
 					oldEnglishName:'',
 					chineseName: '',
-					oldChineseName: ''
+					oldChineseName: '',
+					birthday: '',
+					oldBirthday: ''
 				},
 				members: ''
 			}
@@ -32,6 +44,10 @@
 				
 				this.member.chineseName = option.chineseName;
 				this.member.oldChineseName = option.chineseName;
+				
+				this.member.birthday = option.birthday;
+				this.member.oldBirthday = option.birthday;
+				
 				uni.getStorage({
 					key: 'member',
 					success: (res) => {
@@ -39,6 +55,14 @@
 						this.members = object;
 					}
 				});
+			},
+			computed: {
+			    startDate() {
+			        return this.getDate('start');
+			    },
+			    endDate() {
+			        return this.getDate('end');
+			    }
 			},
 			selectImage: function() {
 				uni.chooseImage({
@@ -57,13 +81,14 @@
 					}
 				});
 			},
-			upDate:function() {
+			upDate: function() {
 				//judge the modified name is exited.
 				for(var i = 0; i < this.members.length; i++){
 					if(this.members[i].englishName === this.member.oldEnglishName){
 						this.members[i].englishName = this.member.englishName;
 						this.members[i].img = this.member.img;
 						this.members[i].chineseName =this.member.chineseName;
+						this.members[i].birthday = this.member.birthday;
 						break;
 					}
 				}
@@ -76,13 +101,29 @@
 					data: data,
 					success:function(){
 					    uni.switchTab({
-					    url: '../index/listInfo',
+							url: '../index/listInfo',
 						});
 					}
-					
 				})
+			},
+			bindDateChange: function(e) {
+			    this.member.birthday = e.target.value
+			},
+			getDate(type) {
+			    const date = new Date();
+			    let year = date.getFullYear();
+			    let month = date.getMonth() + 1;
+			    let day = date.getDate();
+				
+			    if (type === 'start') {
+			        year = year - 60;
+			    } else if (type === 'end') {
+			        year = year + 2;
+			    }
+			    month = month > 9 ? month : '0' + month;;
+			    day = day > 9 ? day : '0' + day;
+			    return `${year}-${month}-${day}`;
 			}
-			
 		}
 	}
 </script>
@@ -94,6 +135,7 @@
 		flex-direction: column;
 	}
 	.mod-head-photo {
+		margin-top: 35rpx;
 		border-radius: 30rpx;
 		width: 90%;
 		margin-left: 5%;
@@ -107,7 +149,7 @@
 		margin-left: 5%;
 		margin-top: 50rpx;
 	}
-	.mode-input{
+	.mode-input-view{
 		border-style: hidden hidden solid hidden;
 		border-color: #f2f2f2;
 		width: 80%;
@@ -115,5 +157,8 @@
 		color: #cacaca;
 		position: relative;
 		margin-top: 50rpx;
+	}
+	.mode-input {
+		float: right;
 	}
 </style>

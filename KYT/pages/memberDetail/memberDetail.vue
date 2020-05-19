@@ -1,18 +1,22 @@
 <template>
 	<view>
 		<image src="../../static/delete.png" class="delIcon" @click="delMember"></image>
-		<navigator class="container-edit" :url="'../memberEdit/memberEdit?englishName='+englishName+'&chineseName='+chineseName+'&img='+img">
+		<navigator class="container-edit" :url="'../memberEdit/memberEdit?englishName='+englishName+'&chineseName='+chineseName+'&img='+img+'&birthday='+birthday">
 			<uni-icons type="compose" size="30" color="#1a87ff" class="edit" ></uni-icons>
 		</navigator>
 		<view class="container">
 			<image class="mode-avtor":src="img" mode="scaleToFill"></image>
 		</view>
-		<view>
-			<input type="text" :value="englishName" class="mode-input" disabled="true"></input>
+		<view class="mode-input">
+			English Name:	{{englishName}}
 		</view>
-		<view>
-			<input type="text" :value="chineseName" class="mode-input"  disabled="true"></input>
+		<view class="mode-input">
+			Chinese Name:	{{chineseName}}
 		</view>
+		<view class="mode-input">
+			Bithday:	{{birthday}}
+		</view>
+		<view class="blank"></view>
 	</view>
 </template>
 
@@ -25,9 +29,10 @@
 				teamMembersInfo: '',
 				img: '',
 				index: 0,
+				birthday: '',
 			}
 		},
-		onLoad: function(option) {
+		onLoad:function(option){
 			this.englishName = option.englishName;
 			let teamMembersInfo = JSON.parse(decodeURIComponent(option.teamMembers));
 			this.teamMembersInfo = teamMembersInfo;
@@ -35,6 +40,7 @@
 				if(teamMembersInfo[i].englishName === this.englishName) {
 					this.img = teamMembersInfo[i].img;
 					this.chineseName = teamMembersInfo[i].chineseName;
+					this.birthday = teamMembersInfo[i].birthday;
 					this.index = i;
 					break;
 				}

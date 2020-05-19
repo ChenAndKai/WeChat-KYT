@@ -1,7 +1,6 @@
 <template>
 	<view class="content">
-		<page-head style="width: 100%;"></page-head>	
-		
+		<page-head style="width: 100%;"></page-head>			
 		<view v-if="typeIndex===0||typeIndex===1">
 			<view class="text-box">
 				{{title}}
@@ -15,7 +14,6 @@
 				</li>
 			</view>
 		</view>
-		
 		<view v-if="typeIndex===2" style="width: 100%;">
 			<view class="text-box" >
 				{{title}}
@@ -43,21 +41,21 @@
 				
 				checkBoxText: 'Check', 		//Bottom button text
 				resultInfo: ' ', 									
-				checkColor: '',  		//Bottom button color
-				bgColor: '',   			//The background color at the bottom
-				color: '',    			//Bottom button text color
+				checkColor: '',  			//Bottom button color
+				bgColor: '',   				//The background color at the bottom
+				color: '',    				//Bottom button text color
 							
 				checkedFlag: false, 		//Whether you checked it
 				
 				nameList: [],											
 				imgPathList: [],
 				wrongList: [],  
-				array: [],			//List of current question information
+				array: [],					//List of current question information
 				
 				optionNumber: 3,											
 				rightAnswerIndex: -1,		
 				selectIndex: -1,	
-				typeIndex: 0,			//Question type index				
+				typeIndex: 0,				//Question type index				
 			}
 		},		
 		methods: {	 
@@ -65,8 +63,8 @@
 				uni.showModal({
 					title: 'Attention',
 					content: 'You can choose to end this test\r\n or start looping through\r\n the wrong questions',					
-					cancelText: 'Eixt',
-					confirmText: 'continue',
+					cancelText: 'Exit',
+					confirmText: 'Continue',
 					confirmColor: '#007AFF',
 					cancelColor: '#FF464F',
 					success: (res) => {
@@ -214,18 +212,18 @@
 		onLoad: function(option) {
 			this.typeIndex = parseInt(option.typeIndex);	
 		},
-		onShow: function(option) {
-			if (this.typeIndex === 0 || this.typeIndex === 1) {
-				this.optionNumber = 3;
-			}
-			else if (this.typeIndex === 2) {						
-				this.optionNumber = 4;	
-			}
+		onShow: function() {
 			if(!this.$member.finishFlag) {
 				uni.getStorage({
 					key: 'member',
 					success: (res) => {
 						let obj = JSON.parse(res.data);
+						if (this.typeIndex === 0 || this.typeIndex === 1) {
+							this.optionNumber = obj.length>3?3:obj.length;
+						}
+						else if (this.typeIndex === 2) {						
+							this.optionNumber = obj.length>4?4:obj.length;	
+						}
 						if(this.imgPathList.length === 0) {
 							this.array = this.getRandomArrayElements(obj);
 							this.rightAnswerIndex = Math.floor((Math.random() * this.optionNumber));
@@ -262,8 +260,7 @@
 		width: 90%;
 		margin-bottom: 30rpx;
 	}
-	.img-box .memberImg {
-		width: 100%;	
+	.img-box .memberImg {	
 		height: 450rpx;
 		border-radius:15rpx;	
 	}
@@ -295,9 +292,7 @@
 	}	
 	.blank {
 		flex:1 ; 
-		min-height: 40rpx;
-	}
-	
+	}	
 	.imageItem {
 		width:46%;
 		height: 400rpx;
