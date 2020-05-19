@@ -1,5 +1,6 @@
 <template>
 	<view>
+		<image src="../../static/delete.png" class="delIcon" @click="delMember"></image>
 		<navigator class="container-edit" :url="'../memberEdit/memberEdit?englishName='+englishName+'&chineseName='+chineseName+'&img='+img">
 			<uni-icons type="compose" size="30" color="#1a87ff" class="edit" ></uni-icons>
 		</navigator>
@@ -22,51 +23,95 @@
 				englishName: '',
 				chineseName: '',
 				teamMembersInfo: '',
-				img: ''
+				img: '',
+				index: 0,
 			}
 		},
 		onLoad:function(option){
 			this.englishName = option.englishName;
-			var teamMembersInfo = JSON.parse(decodeURIComponent(option.teamMembers));
+			let teamMembersInfo = JSON.parse(decodeURIComponent(option.teamMembers));
 			this.teamMembersInfo = teamMembersInfo;
-			for(var i = 0; i<teamMembersInfo.length; i++){
-				if(teamMembersInfo[i].englishName === this.englishName){
+			for(let i = 0; i < teamMembersInfo.length; i++) {
+				if(teamMembersInfo[i].englishName === this.englishName) {
 					this.img = teamMembersInfo[i].img;
 					this.chineseName = teamMembersInfo[i].chineseName;
+					this.index = i;
 					break;
 				}
 			}
 			uni.setNavigationBarTitle({
 				title:this.englishName
 			})
+		}, 
+		methods: {
+			delMember: function() {
+				uni.showModal({
+					title: 'Attention',
+					content: 'Be sure to delete the member information',					
+					cancelText: 'Eixt',
+					confirmText: 'Confirm',
+					confirmColor: '#007AFF',
+					cancelColor: '#FF464F',
+					success: (res) => {
+						if(res.confirm) {							
+							let data = JSON.stringify(this.delOneElement());
+							uni.setStorage({
+								key: 'member',
+								data: data,
+								success:function(){
+								    uni.switchTab({
+								    url: '../index/listInfo',
+									});
+								}				
+							})
+						} 
+					},				
+				})				
+			},
+			delOneElement: function() {
+				let array = [];
+				for(let i = 0; i < this.teamMembersInfo.length; i++) {
+					if(this.teamMembersInfo[i].englishName !== this.englishName) {
+						array.push(this.teamMembersInfo[i]);
+					}
+				}
+				return array;
+			}
 		}
 	}
 </script>
 
 <style>
-	.edit{
+	.delIcon {
+		align-items: baseline;
+		float: left;
+		width: 35px;
+		height: 50rpx;
+		margin: 2rpx auto auto 5rpx;
+	}
+	.edit {
 		align-items: baseline;
 		float: right; 
 	}
-	.container{
+	.container {
 		width: 90%;
 		margin-left:5%;
 		
 	}
-	.mode-avtor{
+	.mode-avtor {
 			border-radius: 30rpx;
 			width: 90%;
 			margin-left: 5%;
 			height: 880rpx;
 	}
-	.nameStyle{
+	.nameStyle {
 		 text-align: center;
 	}
-	.container-edit{
+	.container-edit {
 		display: flex;
 		flex-direction: row-reverse;
 	}
-	.mode-input{
+	.mode-input {
 		border-style: hidden hidden solid hidden;
 		border-color: #f2f2f2;
 		width: 80%;

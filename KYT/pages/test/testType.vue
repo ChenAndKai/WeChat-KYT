@@ -64,7 +64,7 @@
 			showModal: function() {
 				uni.showModal({
 					title: 'Attention',
-					content: 'You can choose to end this test\r\n or start looping through the wrong',					
+					content: 'You can choose to end this test\r\n or start looping through\r\n the wrong questions',					
 					cancelText: 'Eixt',
 					confirmText: 'continue',
 					confirmColor: '#007AFF',

@@ -312,8 +312,9 @@
   .cmd-circle {
     display: inline-block;
     box-sizing: border-box;
-    list-style: none;
+    /* list-style: none; */
     margin: 0;
     padding: 0;
+	z-index: 1;
   }
 </style>

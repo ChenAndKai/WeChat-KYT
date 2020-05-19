@@ -49,7 +49,7 @@
 		onLoad: function(option) {
 			
 			
-			var item = JSON.parse(decodeURIComponent(option.teamMembers));
+			let item = JSON.parse(decodeURIComponent(option.teamMembers));
 			
 			this.teamMembers = item;
 		},
@@ -63,7 +63,6 @@
 					success: (res) => {
 						this.imgPath = res.tempFilePaths[0];
 						this.flag = false;	
-						console.log(this.imgPath)
 					}
 				});
 			},
@@ -71,7 +70,6 @@
 				if(this.flag) {
 					this.showModal('You have already uploaded this information.');
 				}	
-				console.log(this.englishName+'...'+this.imgPath+'...'+this.chineseName+'...'+this.birthday);
 				if(this.englishName === '' || this.imgPath === '' || this.chineseName === '') {				
 					this.showModal('Name or photo or chineseName is empty.');
 				}
@@ -116,7 +114,7 @@
 				})	
 			},		
 			saveDataToStorage: function() {
-				var obj = {
+				let obj = {
 					img: this.imgPath,
 					chineseName: this.chineseName.trim(),
 					englishName: this.englishName.trim().toLowerCase(),
@@ -124,8 +122,7 @@
 				}
 				this.teamMembers.push(obj);
 				
-				var jsonData = JSON.stringify(this.teamMembers);
-				console.log(jsonData)
+				let jsonData = JSON.stringify(this.teamMembers);
 				uni.setStorage({
 					key: 'member',
 					data: jsonData,

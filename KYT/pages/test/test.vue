@@ -46,17 +46,23 @@
 		},
 		methods: {
 			gotoTest: function() {
-				this.show = true;
-			},
-			confirm: function(n) {
-				// this.$member.setTestItemCount(n.length);
-				this.show = false;
+				// this.show = true;
 				this.$member.finishFlag = false;
 				this.$member.initWrongList();
 				let typeIndex =  Math.floor((Math.random() * 3));
 				uni.redirectTo({
 					url: 'testType?typeIndex=' + typeIndex,
 				})
+			},
+			confirm: function(n) {
+				// this.$member.setTestItemCount(n.length);
+				// this.show = false;
+				// this.$member.finishFlag = false;
+				// this.$member.initWrongList();
+				// let typeIndex =  Math.floor((Math.random() * 3));
+				// uni.redirectTo({
+				// 	url: 'testType?typeIndex=' + typeIndex,
+				// })
 			},
 			getScoreFromStorage: function() {
 				let sum = 0;

@@ -24,9 +24,11 @@
 		},
 		methods: {
 			getDataFromStorage: function() {
+				
 				uni.getStorage({
 					key: 'member',
 					success: (res) => {
+						console.log(res);
 						let obj = JSON.parse(res.data);
 						this.teamMembersInfo = obj;
 					}
@@ -76,6 +78,7 @@
 		bottom: 0; left: 0; 
 		width: 100%; 
 		background-color: rgba(255,255,255,0.6);
+		text-align: center;
 	}
 	.mode-image{
 		width: 100%; height: 100%;

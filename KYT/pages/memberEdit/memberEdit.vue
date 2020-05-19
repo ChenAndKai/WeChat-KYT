@@ -37,7 +37,6 @@
 					success: (res) => {
 						var object = JSON.parse(res.data);	
 						this.members = object;
-						console.log('解析出来的对象'+object)
 					}
 				});
 			},
@@ -65,7 +64,6 @@
 						this.members[i].englishName = this.member.englishName;
 						this.members[i].img = this.member.img;
 						this.members[i].chineseName =this.member.chineseName;
-						console.log("修改后的对象"+this.members[i].name+'...'+this.members[i].img)
 						break;
 					}
 				}
