@@ -23,7 +23,7 @@
             		"path": "pages/addNewMember/addNewMember",
            		 "style": {
 				"navigationBarTitleText": "Add New Member"
-				}
+			}
 		},
 		{
             		"path": "pages/memberDetail/memberDetail",
