@@ -4,27 +4,32 @@
 		<view class="top_first" v-show="firstFlag">
 			<cmd-circle type="circle" :percent="100" stroke-color="#E2E2E2" :stroke-width="20" :width="width" :showInfo="false"></cmd-circle>
 			<view class="first_text">
-				<view>You haven't take any tests yet</view>
+				<view>{{firstContent}}</view>
 			</view>
 		</view>
 		<view class="top_score" v-show="!firstFlag">
 			<cmd-circle type="circle" :percent="averageScore"  stroke-color="#4CD964" :stroke-width="20" :width="width" :showInfo="false"></cmd-circle>
 			<view class="score_text">
-				<view>You've got</view>
+				<view>{{infoOne}}</view>
 				<view class="score">{{averageScore}}</view>
-				<view>Average Score</view>
+				<view>{{infoTwo}}</view>
 			</view>
+		</view>
+		<view class="qiun-charts" >
+			<canvas canvas-id="canvasLineA" id="canvasLineA" class="charts" @touchstart="touchLineA"></canvas>
 		</view>
 		<view class="blank"></view>
 		<view class="testButton" @click="gotoTest()">
-			Start a new Test
+			{{button}}
 		</view>
 	</view>
 	
 </template>
 
 <script>
-	
+	import uCharts from '@/components/u-charts/u-charts.js';
+	var _self;
+	var canvaLineA=null;
 	export default {
 		data: function() {
 			return {
@@ -33,6 +38,17 @@
 				width: 0,
 				averageScore: 0,
 				show: false,
+				cWidth:'',
+				cHeight:'',
+				pixelRatio:1,
+				score:[],
+				count:[],
+				nickName:'Rock',
+				firstContent: '',
+				infoOne: '',
+				infoTwo: '',
+				button: '',
+
 			}
 		},
 		onLoad: function() {
@@ -42,23 +58,54 @@
 				}
 			})
 			this.getScoreFromStorage();
-			this.$member.percent = 0;
+			this.$common.percent = 0;
+			_self = this;
+			this.cWidth=uni.upx2px(750);
+			this.cHeight=uni.upx2px(500);
+			uni.getStorage({
+				key:"score",
+				success:(res) => {
+					this.score = res.data[1];
+					var res =[];
+					for(var i = 0;i < this.score.length; i++){
+						res.push(i+1);
+					}
+					this.count = res;
+				}
+			});
+			uni.getUserInfo({
+				success: (res) => {
+					this.nickName = res.userInfo.nickName;
+				}
+			});
+		},
+		onShow:function(){
+			this.$setBar.setNavigationBar(this.$common.language.content.test.navigationBarTitleText);
+			this.firstContent = this.$common.language.content.test.firstContent;
+			this.button = this.$common.language.content.test.button;
+			this.infoOne = this.$common.language.content.test.infoOne;
+			this.infoTwo = this.$common.language.content.test.infoTwo;
+			
+			
+		},
+		onReady() {
+			this.showCharts();
 		},
 		methods: {
 			gotoTest: function() {
 				// this.show = true;
-				this.$member.finishFlag = false;
-				this.$member.initWrongList();
+				this.$common.finishFlag = false;
+				this.$common.initWrongList();
 				let typeIndex =  Math.floor((Math.random() * 3));
 				uni.redirectTo({
 					url: 'testType?typeIndex=' + typeIndex,
 				})
 			},
 			confirm: function(n) {
-				// this.$member.setTestItemCount(n.length);
+				// this.$common.setTestItemCount(n.length);
 				// this.show = false;
-				// this.$member.finishFlag = false;
-				// this.$member.initWrongList();
+				// this.$common.finishFlag = false;
+				// this.$common.initWrongList();
 				// let typeIndex =  Math.floor((Math.random() * 3));
 				// uni.redirectTo({
 				// 	url: 'testType?typeIndex=' + typeIndex,
@@ -71,8 +118,8 @@
 					success: (res) => {		
 						let tempScore = res.data[1];
 						tempScore[tempScore.length] = 0;
-						this.$member.setScore(tempScore);
-						this.$member.setCount(res.data[0]);
+						this.$common.setScore(tempScore);
+						this.$common.setCount(res.data[0]);
 						for(let i = 0;i<res.data[1].length;i++) {
 							sum += res.data[1][i];
 						}
@@ -80,16 +127,90 @@
 				   },
 				   fail: (err) => {
 						this.firstFlag = true;
-						this.$member.score = [0];
+						this.$common.score = [0];
 				   }
 				});
+			},
+			showCharts(){
+				let LineA={categories:[],series:[]};
+				LineA.categories=this.count;
+				var temp = {
+					name:this.nickName,
+					color:"#1890ff",
+					data:this.score,
+					index:0,
+					pointShape:"circle",
+					show:true,
+					type:"line"
+				}
+				LineA.series.push(temp);
+				console.log(LineA.categories,LineA.series)
+				this.showLineA("canvasLineA",LineA);
+			},
+			showLineA(canvasId,chartData){
+				canvaLineA=new uCharts({
+					$this:_self,
+					canvasId: canvasId,
+					type: 'line',
+					fontSize:11,
+					legend:{show:true},
+					dataLabel:false,
+					dataPointShape:true,
+					background:'#FFFFFF',
+					pixelRatio:_self.pixelRatio,
+					categories: chartData.categories,
+					series: chartData.series,
+					animation: true,
+					xAxis: {
+						type:'grid',
+						gridColor:'#CCCCCC',
+						gridType:'dash',
+						dashLength:8
+					},
+					yAxis: {
+						gridType:'dash',
+						gridColor:'#CCCCCC',
+						dashLength:8,
+						splitNumber:5,
+						min:0,
+						max:100,
+						format:(val)=>{return val.toFixed(0)+'分'}
+					},
+					width: _self.cWidth*_self.pixelRatio,
+					height: _self.cHeight*_self.pixelRatio,
+					extra: {
+						line:{
+							type: 'straight'
+						}
+					}
+				});
+				
+			},
+			touchLineA(e) {
+				canvaLineA.showToolTip(e, {
+					format: function (item, category) {
+						return item.name + ':' + item.data 
+					}
+				});
 			}
-		},
+		}
 	}
 	
 </script>
 
 <style>
+	/*样式的width和height一定要与定义的cWidth和cHeight相对应*/
+	.qiun-charts {
+		width: 750upx;
+		height: 500upx;
+		background-color: #FFFFFF;
+	}
+	
+	.charts {
+		width: 750upx;
+		height: 500upx;
+		background-color: #FFFFFF;
+	}
 	.content {
 		width: auto;
 		min-height: 100vh;

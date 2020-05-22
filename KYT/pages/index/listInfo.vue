@@ -15,10 +15,11 @@
 </template>
 <script>
 	import uniIcons from "@/components/uni-icons/uni-icons.vue"
+	let english = require('../../utils/english.js');
 	export default {
 		data() {
 			return {
-				teamMembersInfo: [],		
+				teamMembersInfo: [],	
 			}
 		},
 		methods: {
@@ -31,9 +32,36 @@
 					}
 				});
 			},
+			getLastLanguage: function() {
+				uni.getStorage({
+					key: 'language',
+					success: (res) => {
+						this.$common.setLanguage(res.data);
+					},
+					fail: (err) => {
+						this.$common.setLanguage(english);
+					},
+					complete: () => {
+						console.log(this.$common.language.content.language.language);
+						this.$setBar.setNavigationBar(this.$common.language.content.listInfo.navigationBarTitleText);
+						this.$setBar.setTabBar(this.$common.language.content);
+						this.getDataFromStorage();
+					}
+						
+				})
+			},
+		},
+		onLoad:function(){
 		},
 		onShow: function() {
-			this.getDataFromStorage();
+			if(this.$common.language.length !== 0) {
+				this.$setBar.setNavigationBar(this.$common.language.content.listInfo.navigationBarTitleText);
+				this.$setBar.setTabBar(this.$common.language.content);
+				this.getDataFromStorage();
+			}
+			else {
+				this.getLastLanguage();
+			}
 		},	
 		components: {uniIcons}
 	}

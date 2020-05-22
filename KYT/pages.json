@@ -32,7 +32,14 @@
 		{
             "path" : "pages/memberEdit/memberEdit",
             "style" : {}
-        }
+        },
+		{
+			"path": "pages/config/language",
+			"style": {
+				"navigationBarTitleText": "Language Config"
+			}
+		}
+		
     ],
 	"tabBar":{
 		"color":"#ececec",
@@ -50,6 +57,12 @@
 				"iconPath":"static/tabbar/team_unselected.png",
 				"selectedIconPath":"static/tabbar/team_selected.png",
 				"text":"Team Member"
+			},
+			{
+				"pagePath":"pages/config/language",
+				"iconPath":"static/tabbar/config_unselected.png",
+				"selectedIconPath":"static/tabbar/config_selected.png",
+				"text":"Config"
 			}
 		]	
 	},

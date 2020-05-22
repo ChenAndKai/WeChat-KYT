@@ -2,17 +2,18 @@
 	<view class="content">
 		<image :src="member.img" class="mod-head-photo" @click="selectImage"></image>
 		<view class="mode-input-view">
-			English Name:<input class="mode-input" type="text" v-model="member.englishName"></input>
+			<text class="label">{{english_Name}}:</text><input class="mode-input" type="text" v-model="member.englishName"></input>
 		</view>
 		<view class="mode-input-view">
-			Chinese Name:<input class="mode-input" type="text" v-model="member.chineseName"></input>
+			<text class="label">{{chinese_Name}}:</text><input class="mode-input" type="text" v-model="member.chineseName"></input>
 		</view>
 		<view  class="mode-input-view">
-			<picker mode="date" :start="startDate" :end="endDate" @change="bindDateChange" color="#7f7fa0">
-				Birthday:  {{member.birthday === undefined ? '':member.birthday}}
+			<text class="label">{{birth}}:</text>
+			<picker mode="date" class="date" :start="startDate" :end="endDate" @change="bindDateChange" color="#7f7fa0">
+				  {{member.birthday === undefined ? '':member.birthday}}
 			</picker>
 		</view>
-		<button class="mod-button" @click="upDate()">Update</button>
+		<button class="mod-button" @click="upDate()">{{button}}</button>
 		<view class="blank"></view>
 	</view>
 </template>
@@ -29,10 +30,21 @@
 					chineseName: '',
 					oldChineseName: '',
 					birthday: '',
-					oldBirthday: ''
+					oldBirthday: '',
 				},
-				members: ''
+				members: '',
+				english_Name: '',
+				chinese_Name: '',
+				birth: '',
+				button: '',
 			}
+		},
+		onShow: function() {
+			console.log(this.$common.language.content.memberEdit.button);
+			this.english_Name = this.$common.language.content.memberInformation.englishName;
+			this.chinese_Name = this.$common.language.content.memberInformation.chineseName;
+			this.birth = this.$common.language.content.memberInformation.birthday;
+			this.button = this.$common.language.content.memberEdit.button;
 		},
 		methods: {
 			onLoad:function(option) {
@@ -141,7 +153,7 @@
 		margin-left: 5%;
 		height: 730rpx;
 	}
-	.mod-button{
+	.mod-button {
 		color: #e9f3ff;
 		border-radius: 30rpx;
 		background-color: #007aff;
@@ -149,16 +161,26 @@
 		margin-left: 5%;
 		margin-top: 50rpx;
 	}
-	.mode-input-view{
-		border-style: hidden hidden solid hidden;
-		border-color: #f2f2f2;
-		width: 80%;
-		margin-left: 10%;
+	.mode-input-view {
+		margin-left: 5%;
 		color: #cacaca;
-		position: relative;
 		margin-top: 50rpx;
+		display: flex;
 	}
 	.mode-input {
-		float: right;
+		border-style: hidden hidden solid hidden;
+		border-color: #f2f2f2;
+		margin-left: 10rpx;
+	}
+	.date {
+		border-style: hidden hidden solid hidden;
+		border-color: #f2f2f2;
+		margin-left: 10rpx;
+		width: 70%;
+	}
+	.label {
+		color: #333333;
+		line-height: 50rpx;
+		font-weight: bold;
 	}
 </style>

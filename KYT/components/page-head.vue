@@ -11,18 +11,18 @@
 		name: "page-head",
 		data: function() {
 			return {
-				percent: this.$member.percent+10,
+				percent: this.$common.percent+10,
+				languagePackage: this.$common.language.content,
 			}
 		},
 		methods: {
 			shutDown: function() {
 				uni.showModal({
-					title: 'Exit test?',
-					content: 'Your progress will be lost\r\n if you exit now!',
-					showCancel: true,
-					cancelText: 'Not Now',
+					title: this.languagePackage.testType.exitPopUp.title,
+					content: this.languagePackage.testType.exitPopUp.content,
+					cancelText: this.languagePackage.testType.exitPopUp.leftButton,
 					cancelColor: '#007AFF',
-					confirmText: 'Exit',
+					confirmText: this.languagePackage.testType.exitPopUp.rightButton,
 					confirmColor: '#FF464F',
 					success: (res) => {
 						if (res.confirm) {

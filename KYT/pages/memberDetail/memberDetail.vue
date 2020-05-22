@@ -1,6 +1,7 @@
 <template>
 	<view>
-		<image src="../../static/delete.png" class="delIcon" @click="delMember"></image>
+		<!-- <image src="../../static/delete.png" class="delIcon" @click="delMember"></image> -->
+		<uni-icons type="trash" size="30" color="#1a87ff" class="delete"  @click="delMember"></uni-icons>
 		<navigator class="container-edit" :url="'../memberEdit/memberEdit?englishName='+englishName+'&chineseName='+chineseName+'&img='+img+'&birthday='+birthday">
 			<uni-icons type="compose" size="30" color="#1a87ff" class="edit" ></uni-icons>
 		</navigator>
@@ -8,13 +9,13 @@
 			<image class="mode-avtor":src="img" mode="scaleToFill"></image>
 		</view>
 		<view class="mode-input">
-			English Name:	{{englishName}}
+			<text>{{english_Name}}:	{{englishName}}</text>
 		</view>
 		<view class="mode-input">
-			Chinese Name:	{{chineseName}}
+			<text>{{chinese_Name}}:	{{chineseName}}</text>
 		</view>
 		<view class="mode-input">
-			Bithday:	{{birthday}}
+			<text>{{birth}}:	{{birthday}}</text>
 		</view>
 		<view class="blank"></view>
 	</view>
@@ -24,6 +25,9 @@
 	export default {
 		data() {
 			return {
+				english_Name: '',
+				chinese_Name: '',
+				birth: '',
 				englishName: '',
 				chineseName: '',
 				teamMembersInfo: '',
@@ -49,13 +53,18 @@
 				title:this.englishName
 			})
 		}, 
+		onShow:function(){
+			this.english_Name = this.$common.language.content.memberInformation.englishName;
+			this.chinese_Name = this.$common.language.content.memberInformation.chineseName;
+			this.birth = this.$common.language.content.memberInformation.birthday;
+		},
 		methods: {
 			delMember: function() {
 				uni.showModal({
-					title: 'Attention',
-					content: 'Be sure to delete the member information',					
-					cancelText: 'Eixt',
-					confirmText: 'Confirm',
+					title: this.$common.language.content.memberDetail.popUp.title,
+					content: this.$common.language.content.memberDetail.popUp.content,					
+					cancelText: this.$common.language.content.memberDetail.popUp.exit,
+					confirmText: this.$common.language.content.memberDetail.popUp.confirm,
 					confirmColor: '#007AFF',
 					cancelColor: '#FF464F',
 					success: (res) => {
@@ -88,12 +97,9 @@
 </script>
 
 <style>
-	.delIcon {
+	.delete {
 		align-items: baseline;
-		float: left;
-		width: 35px;
-		height: 50rpx;
-		margin: 2rpx auto auto 5rpx;
+		float: left; 
 	}
 	.edit {
 		align-items: baseline;
@@ -106,9 +112,8 @@
 	}
 	.mode-avtor {
 		border-radius: 30rpx;
-		width: 90%;
-		margin-left: 5%;
-		height: 780rpx;
+		width: 100%;
+		height: 750rpx;
 	}
 	.nameStyle {
 		text-align: center;

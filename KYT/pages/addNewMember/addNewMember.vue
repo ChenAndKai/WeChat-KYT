@@ -5,19 +5,19 @@
 			<uni-icons type="camera" size="30" color="#808080" class="mode-camera-icon" @click="selectImg()" ></uni-icons>
 		</view>
 		<view>
-			<input type="text" placeholder="English Name" class="mode-input" v-model="englishName"></input>
+			<input type="text" :placeholder="english_Name" class="mode-input" v-model="englishName"></input>
 		</view>
 		
 		<view>
-			<input type="text" placeholder="Chinese Name" class="mode-input" v-model="chineseName"></input>
+			<input type="text" :placeholder="chinese_Name" class="mode-input" v-model="chineseName"></input>
 		</view>
 		<view>
 			<picker mode="date" v-model="birthday" :start="startDate" :end="endDate" @change="bindDateChange" color="#7f7fa0">
-				<view class="mode-input" v-if="isSelectedDate" >Birthday:</view>
-				<view class="mode-input" v-if="!isSelectedDate" > {{birthday}}</view>
+				<view class="mode-input" v-if="isSelectedDate" ><text class="label">{{birth}}:</text></view>
+				<view class="mode-input" v-if="!isSelectedDate" ><text class="label">{{birthday}}</text> </view>
 			</picker>
 		</view>
-		<button class="mod-button" @click = "saveData()">Add</button>
+		<button class="mod-button" @click = "saveData()">{{button}}</button>
 		<view class="blank"></view>
 	</view>
 </template>
@@ -36,7 +36,11 @@
 				birthday: currentDate,
 				flag: false,//Determines if the current information has been successfully saved
 				teamMembers: [],
-				isSelectedDate: true 
+				isSelectedDate: true ,
+				english_Name: '',
+				chinese_Name: '',
+				birth: '',
+				button: '',
 			}
 		},
 		computed: {
@@ -49,10 +53,16 @@
 		},
 		onLoad: function(option) {
 			
-			
 			let item = JSON.parse(decodeURIComponent(option.teamMembers));
 			
 			this.teamMembers = item;
+		},
+		onShow:function(){
+			this.english_Name = this.$common.language.content.memberInformation.englishName;
+			this.chinese_Name = this.$common.language.content.memberInformation.chineseName;
+			this.birth = this.$common.language.content.memberInformation.birthday;
+			this.button = this.$common.language.content.addMember.button;
+			this.$setBar.setNavigationBar(this.$common.language.content.addMember.navigationBarTitleText);
 		},
 		methods: {
 			//Select a photo from the gallery or take a photo with the camera
@@ -69,10 +79,10 @@
 			},
 			saveData: function() {	
 				if(this.flag) {
-					this.showModal('You have already uploaded this information.');
+					this.showModal(this.$common.language.content.addMember.popUp.uploadedContent);
 				}	
-				if(this.englishName === '' || this.imgPath === '' || this.chineseName === '') {				
-					this.showModal('Name or photo or chineseName\r\n is empty.');
+				if(this.englishName === '' || this.imgPath === '' || this.chineseName === '') {		
+					this.showModal(this.$common.language.content.addMember.popUp.emptyContent);
 				}
 				else {
 					this.updateOrAdd();				
@@ -84,7 +94,7 @@
 					for(i = 0;i < this.teamMembers.length;i++) {
 						if(this.englishName.trim().toLocaleLowerCase() === this.teamMembers[i].chineseName|| 
 						  this.chineseName.trim() === this.teamMembers[i].chineseName) {
-							this.showModal('The member already exists.',false);
+							this.showModal(this.$common.language.content.addMember.popUp.existContent,false);
 							break;
 						}									
 					}
@@ -97,14 +107,13 @@
 							this.saveDataToStorage();
 						},
 					});
-				}					
+				}	 				
 			},
 			showModal: function(content,flag) {
-				uni.showModal({
-					
+				uni.showModal({		
 					showCancel: false,
 					content: content,
-					confirmText: 'confirm',
+					confirmText: this.$common.language.content.addMember.confirm,
 					success: (res) => {
 						if(flag) {
 							uni.switchTab({
@@ -128,7 +137,7 @@
 					key: 'member',
 					data: jsonData,
 					success: () => {
-						this.showModal('Information uploaded successfully.',true);	
+						this.showModal(this.$common.language.content.addMember.popUp.successContent,true);	
 					},
 				});
 			},
@@ -198,5 +207,8 @@
 		width: 90%;
 		margin-left: 5%;
 		margin-top: 50rpx;
+	}
+	.label {
+		color: #cacaca;
 	}
 </style>

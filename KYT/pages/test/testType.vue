@@ -39,7 +39,7 @@
 			return {
 				title: '',	
 				
-				checkBoxText: 'Check', 		//Bottom button text
+				checkBoxText: '', 		//Bottom button text
 				resultInfo: ' ', 									
 				checkColor: '',  			//Bottom button color
 				bgColor: '',   				//The background color at the bottom
@@ -55,22 +55,22 @@
 				optionNumber: 3,											
 				rightAnswerIndex: -1,		
 				selectIndex: -1,	
-				typeIndex: 0,				//Question type index				
+				typeIndex: 0,				//Question type index	
 			}
 		},		
 		methods: {	 
 			showModal: function() {
 				uni.showModal({
-					title: 'Attention',
-					content: 'You can choose to end this test\r\n or start looping through\r\n the wrong questions',					
-					cancelText: 'Exit',
-					confirmText: 'Continue',
+					title: this.$common.language.content.testType.finishPopUp.title,
+					content: this.$common.language.content.testType.finishPopUp.content,					
+					cancelText: this.$common.language.content.testType.finishPopUp.leftButton,
+					confirmText: this.$common.language.content.testType.finishPopUp.rightButton,
 					confirmColor: '#007AFF',
 					cancelColor: '#FF464F',
 					success: (res) => {
 						if(res.confirm) {							
 							uni.redirectTo({
-								url: 'testType?typeIndex=' + this.$member.wrongList[0].typeIndex,
+								url: 'testType?typeIndex=' + this.$common.wrongList[0].typeIndex,
 							});
 						} 
 						else if(res.cancel) {	
@@ -100,8 +100,8 @@
 			saveScoreData: function() {
 				//Each examination result and examination times
 				let scoreDataInfo = [];  
-				scoreDataInfo.push(this.$member.count + 1);
-				scoreDataInfo.push(this.$member.score);
+				scoreDataInfo.push(this.$common.count + 1);
+				scoreDataInfo.push(this.$common.score);
 				uni.setStorage({
 					key: 'score',
 					data: scoreDataInfo,
@@ -115,13 +115,13 @@
 			},
 			checkAndContinue: function() {
 				if(this.checkedFlag) {
-					this.$member.percent += 10;				
+					this.$common.percent += 10;				
 					//just finish 10 questions
-					if(this.$member.percent === 100) {
-						this.$member.finishFlag = true;
+					if(this.$common.percent === 100) {
+						this.$common.finishFlag = true;
 						//save 10 questions score
 						this.saveScoreData();
-						if(this.$member.wrongList.length > 0) {
+						if(this.$common.wrongList.length > 0) {
 							//Exit test or continue wrong question
 							this.showModal();
 						}
@@ -133,7 +133,7 @@
 						}
 					}
 					//haven't done 10 questions yet
-					else if(!this.$member.finishFlag) {
+					else if(!this.$common.finishFlag) {
 						let typeIndex =  Math.floor((Math.random() * 3));
 						uni.redirectTo({
 							url: 'testType?typeIndex=' + typeIndex,
@@ -141,9 +141,9 @@
 					}
 					//do wrong questions
 					else {
-						if(this.$member.wrongList.length > 0) {
+						if(this.$common.wrongList.length > 0) {
 							uni.redirectTo({
-								url: 'testType?typeIndex=' + this.$member.wrongList[0].typeIndex,
+								url: 'testType?typeIndex=' + this.$common.wrongList[0].typeIndex,
 							})
 						}
 						else {
@@ -156,36 +156,39 @@
 				if(!this.checkedFlag && this.selectIndex !== -1) {
 					let resultInfo;
 					if(this.selectIndex === this.rightAnswerIndex) {
-						resultInfo = 'You are right!';						
+						resultInfo = this.$common.language.content.testType.correctInfo;						
 						this.changeFootPartStyle('#C7F7CC','#01500F','#4CD964',resultInfo);
-						if(!this.$member.finishFlag) {
-							this.$member.score[this.$member.score.length - 1] += 10;
+						if(!this.$common.finishFlag) {
+							this.$common.score[this.$common.score.length - 1] += 10;
 						} 
-						else if(this.$member.finishFlag) {
-							this.$member.delWrongListFirstOne();
+						else if(this.$common.finishFlag) {
+							this.$common.delWrongListFirstOne();
 						}
-					}
+					} 
 					else {
-						if(this.typeIndex === 2) {	
-							resultInfo = 'this is ' + this.nameList[this.selectIndex] + ',' + this.nameList[this.rightAnswerIndex] + ' is the ' + (this.rightAnswerIndex + 1) + ' image';						
+						if(this.typeIndex === 2) {
+							this.$common.setWrongInfo(this.nameList[this.selectIndex],this.nameList[this.rightAnswerIndex],this.rightAnswerIndex + 1);
+							// resultInfo = 'this is ' + this.nameList[this.selectIndex] + ',' + this.nameList[this.rightAnswerIndex] + ' is the ' + (this.rightAnswerIndex + 1) + ' image';						
+							resultInfo = this.$common.resultInfo;
 						}		
 						else {
-							resultInfo = 'Nope,this is ' + this.nameList[this.rightAnswerIndex];	
+							this.$common.setWrongInfo(this.nameList[this.rightAnswerIndex]);
+							resultInfo = this.$common.resultInfo;	
 						}
 						this.changeFootPartStyle('#F7C7C7','#510303','#FF3B30',resultInfo);			
-						if(this.$member.finishFlag) {
-							this.$member.delWrongListFirstOne();
+						if(this.$common.finishFlag) {
+							this.$common.delWrongListFirstOne();
 						}
-						this.$member.addWrongList(this.typeIndex,this.rightAnswerIndex,this.array);
+						this.$common.addWrongList(this.typeIndex,this.rightAnswerIndex,this.array);
 					}	
-					this.checkBoxText = 'Continue';
+					this.checkBoxText = this.$common.language.content.testType.continueButton;
 					this.checkedFlag = true;
 				}
-			},			
+			},			 
 			questionList: function() {	
 				if(this.typeIndex === 0) {
 					//Choose an English name according to the picture
-					this.title = 'Who is this?';	
+					this.title = this.$common.language.content.testType.titleOne;	
 					this.imgPathList.push(this.array[this.rightAnswerIndex].img);
 					for(let i = 0;i < this.optionNumber;i++) {
 						this.nameList.push(this.array[i].englishName);
@@ -193,7 +196,7 @@
 				}
 				else if(this.typeIndex === 1) {
 					//Choose an Chinese name according to the picture
-					this.title = 'Who is this?';	
+					this.title = this.$common.language.content.testType.titleOne;	
 					this.imgPathList.push(this.array[this.rightAnswerIndex].img);
 					for(let i = 0;i < this.optionNumber;i++) {
 						this.nameList.push(this.array[i].chineseName);
@@ -201,7 +204,7 @@
 				}
 				else if(this.typeIndex === 2) {
 					//Choose an picture according to the English name	
-					this.title = 'Who is ' + this.array[this.rightAnswerIndex].englishName+'?';
+					this.title = this.$common.language.content.testType.titleTwo + this.array[this.rightAnswerIndex].englishName+'?';
 					for(let i = 0;i < this.optionNumber;i++) {
 						this.nameList.push(this.array[i].englishName);
 						this.imgPathList.push(this.array[i].img);	
@@ -213,7 +216,9 @@
 			this.typeIndex = parseInt(option.typeIndex);	
 		},
 		onShow: function() {
-			if(!this.$member.finishFlag) {
+			this.checkBoxText = this.$common.language.content.testType.checkButton;
+			this.$setBar.setNavigationBar(this.$common.language.content.testType.navigationBarTitleText);
+			if(!this.$common.finishFlag) {
 				uni.getStorage({
 					key: 'member',
 					success: (res) => {
@@ -234,9 +239,9 @@
 			}
 			else {
 				if(this.imgPathList.length === 0) {
-					this.typeIndex = this.$member.wrongList[0].typeIndex;
-					this.rightAnswerIndex = this.$member.wrongList[0].rightAnswerIndex;
-					this.array = this.$member.wrongList[0].array;
+					this.typeIndex = this.$common.wrongList[0].typeIndex;
+					this.rightAnswerIndex = this.$common.wrongList[0].rightAnswerIndex;
+					this.array = this.$common.wrongList[0].array;
 					this.questionList();
 				}
 			}
