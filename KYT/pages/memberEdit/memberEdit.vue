@@ -2,18 +2,18 @@
 	<view class="content">
 		<image :src="member.img" class="mod-head-photo" @click="selectImage"></image>
 		<view class="mode-input-view">
-			<text class="label">{{english_Name}}:</text><input class="mode-input" type="text" v-model="member.englishName"></input>
+			<text class="label">{{memberInfo.englishName}}:</text><input class="mode-input" type="text" v-model="member.englishName"></input>
 		</view>
 		<view class="mode-input-view">
-			<text class="label">{{chinese_Name}}:</text><input class="mode-input" type="text" v-model="member.chineseName"></input>
+			<text class="label">{{memberInfo.chineseName}}:</text><input class="mode-input" type="text" v-model="member.chineseName"></input>
 		</view>
 		<view  class="mode-input-view">
-			<text class="label">{{birth}}:</text>
+			<text class="label">{{memberInfo.birthday}}:</text>
 			<picker mode="date" class="date" :start="startDate" :end="endDate" @change="bindDateChange" color="#7f7fa0">
 				  {{member.birthday === undefined ? '':member.birthday}}
 			</picker>
 		</view>
-		<button class="mod-button" @click="upDate()">{{button}}</button>
+		<button class="mod-button" @click="upDate()">{{memberEdit.button}}</button>
 		<view class="blank"></view>
 	</view>
 </template>
@@ -33,18 +33,21 @@
 					oldBirthday: '',
 				},
 				members: '',
-				english_Name: '',
-				chinese_Name: '',
-				birth: '',
-				button: '',
 			}
 		},
-		onShow: function() {
-			console.log(this.$common.language.content.memberEdit.button);
-			this.english_Name = this.$common.language.content.memberInformation.englishName;
-			this.chinese_Name = this.$common.language.content.memberInformation.chineseName;
-			this.birth = this.$common.language.content.memberInformation.birthday;
-			this.button = this.$common.language.content.memberEdit.button;
+		computed: {
+			memberInfo () {
+				return this.$t('memberInformation');  
+			},
+			memberEdit () {
+				return this.$t('memberEdit');
+			},
+			startDate() {
+				return this.getDate('start');
+			},
+			endDate() {
+				return this.getDate('end');
+			}
 		},
 		methods: {
 			onLoad:function(option) {
@@ -67,14 +70,6 @@
 						this.members = object;
 					}
 				});
-			},
-			computed: {
-			    startDate() {
-			        return this.getDate('start');
-			    },
-			    endDate() {
-			        return this.getDate('end');
-			    }
 			},
 			selectImage: function() {
 				uni.chooseImage({

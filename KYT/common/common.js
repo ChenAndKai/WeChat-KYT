@@ -1,6 +1,5 @@
 
 export default {
-	language: [],
 	score: [],
 	count: 0,
 	percent: 10,
@@ -34,23 +33,25 @@ export default {
 	initWrongList() {
 		this.wrongList = [];
 	},
-	setWrongInfo(wrongName,correctName,imageIndex) {
-		if(this.language === "English") {
-			this.resultInfo = 'this is ' + wrongName + ',' + correctName + ' is the ' + imageIndex + ' image';	
+	setWrongInfo(language) {
+		let correctName = arguments[1];
+		let wrongName = arguments[2];
+		let imageIndex = arguments[3];
+		if(arguments.length === 2) {
+			if(language === "English") {
+				this.resultInfo = 'Nope,this is ' + correctName;
+			}
+			else {
+				this.resultInfo = '错了，这是 ' + correctName;
+			}
 		}
 		else {
-			this.resultInfo = '这是 ' + wrongName + ',' + correctName + '是第 ' + imageIndex + '张照片';
-		}	
-	},
-	setWrongInfo(correctName) {
-		if(this.language === "English") {
-			this.resultInfo = 'Nope,this is ' + correctName;
+			if(language === "English") {
+				this.resultInfo = 'this is ' + wrongName + ',' + correctName + ' is the ' + imageIndex + ' image';	
+			}
+			else {
+				this.resultInfo = '这是 ' + wrongName + ',' + correctName + '是第 ' + imageIndex + '张照片';
+			}	
 		}
-		else {
-			this.resultInfo = '错了，这是 ' + correctName;
-		}
-	},
-	setLanguage(language) {
-		this.language = language;
-	}
+	} 
 }

@@ -4,15 +4,15 @@
 		<view class="top_first" v-show="firstFlag">
 			<cmd-circle type="circle" :percent="100" stroke-color="#E2E2E2" :stroke-width="20" :width="width" :showInfo="false"></cmd-circle>
 			<view class="first_text">
-				<view>{{firstContent}}</view>
+				<view>{{test.firstContent}}</view>
 			</view>
 		</view>
 		<view class="top_score" v-show="!firstFlag">
 			<cmd-circle type="circle" :percent="averageScore"  stroke-color="#4CD964" :stroke-width="20" :width="width" :showInfo="false"></cmd-circle>
 			<view class="score_text">
-				<view>{{infoOne}}</view>
+				<view>{{test.infoOne}}</view>
 				<view class="score">{{averageScore}}</view>
-				<view>{{infoTwo}}</view>
+				<view>{{test.infoTwo}}</view>
 			</view>
 		</view>
 		<view class="qiun-charts" >
@@ -20,7 +20,7 @@
 		</view>
 		<view class="blank"></view>
 		<view class="testButton" @click="gotoTest()">
-			{{button}}
+			{{test.button}}
 		</view>
 	</view>
 	
@@ -38,18 +38,18 @@
 				width: 0,
 				averageScore: 0,
 				show: false,
-				cWidth:'',
-				cHeight:'',
-				pixelRatio:1,
-				score:[],
-				count:[],
-				nickName:'Rock',
-				firstContent: '',
-				infoOne: '',
-				infoTwo: '',
-				button: '',
+				cWidth: '',
+				cHeight: '',
+				pixelRatio: 1,
+				score: [],
+				count: [],
 
 			}
+		},
+		computed: {
+			test () {
+				return this.$t('test');  
+			},
 		},
 		onLoad: function() {
 			uni.getSystemInfo({
@@ -73,20 +73,11 @@
 					this.count = res;
 				}
 			});
-			uni.getUserInfo({
-				success: (res) => {
-					this.nickName = res.userInfo.nickName;
-				}
-			});
+
 		},
-		onShow:function(){
-			this.$setBar.setNavigationBar(this.$common.language.content.test.navigationBarTitleText);
-			this.firstContent = this.$common.language.content.test.firstContent;
-			this.button = this.$common.language.content.test.button;
-			this.infoOne = this.$common.language.content.test.infoOne;
-			this.infoTwo = this.$common.language.content.test.infoTwo;
-			
-			
+		onShow: function() {
+			this.$setBar.setNavigationBar(this.$t('test.navigationBarTitleText'));	
+			this.showCharts();
 		},
 		onReady() {
 			this.showCharts();
@@ -131,62 +122,61 @@
 				   }
 				});
 			},
-			showCharts(){
-				let LineA={categories:[],series:[]};
-				LineA.categories=this.count;
+			showCharts: function() {
+				let LineA = {categories:[],series:[]};
+				LineA.categories = this.count;
 				var temp = {
-					name:this.nickName,
-					color:"#1890ff",
-					data:this.score,
-					index:0,
-					pointShape:"circle",
-					show:true,
-					type:"line"
+					name: this.$t('test.nickName'),
+					color: "#1890ff",
+					data: this.score,
+					index: 0,
+					pointShape: "circle",
+					show: true,
+					type: "line"
 				}
 				LineA.series.push(temp);
-				console.log(LineA.categories,LineA.series)
 				this.showLineA("canvasLineA",LineA);
 			},
-			showLineA(canvasId,chartData){
-				canvaLineA=new uCharts({
-					$this:_self,
+			showLineA: function(canvasId,chartData) {
+				canvaLineA = new uCharts({
+					$this: _self,
 					canvasId: canvasId,
 					type: 'line',
-					fontSize:11,
-					legend:{show:true},
-					dataLabel:false,
-					dataPointShape:true,
-					background:'#FFFFFF',
-					pixelRatio:_self.pixelRatio,
+					fontSize: 11,
+					legend: {show:true},
+					dataLabel: false,
+					dataPointShape: true,
+					background: '#FFFFFF',
+					pixelRatio: _self.pixelRatio,
 					categories: chartData.categories,
 					series: chartData.series,
 					animation: true,
 					xAxis: {
-						type:'grid',
-						gridColor:'#CCCCCC',
-						gridType:'dash',
-						dashLength:8
+						type: 'grid',
+						gridColor: '#CCCCCC',
+						gridType: 'dash',
+						dashLength: 8
 					},
 					yAxis: {
 						gridType:'dash',
 						gridColor:'#CCCCCC',
-						dashLength:8,
-						splitNumber:5,
-						min:0,
-						max:100,
-						format:(val)=>{return val.toFixed(0)+'分'}
+						dashLength: 8,
+						splitNumber: 5,
+						min: 0,
+						max: 100,
+						format: (val)=>{return val.toFixed(0)+''}
 					},
 					width: _self.cWidth*_self.pixelRatio,
 					height: _self.cHeight*_self.pixelRatio,
 					extra: {
-						line:{
+						line: {
 							type: 'straight'
 						}
 					}
 				});
 				
 			},
-			touchLineA(e) {
+			touchLineA: function(e) {
 				canvaLineA.showToolTip(e, {
 					format: function (item, category) {
 						return item.name + ':' + item.data 
@@ -199,13 +189,11 @@
 </script>
 
 <style>
-	/*样式的width和height一定要与定义的cWidth和cHeight相对应*/
 	.qiun-charts {
 		width: 750upx;
 		height: 500upx;
 		background-color: #FFFFFF;
 	}
-	
 	.charts {
 		width: 750upx;
 		height: 500upx;

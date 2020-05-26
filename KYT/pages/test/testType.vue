@@ -57,14 +57,19 @@
 				selectIndex: -1,	
 				typeIndex: 0,				//Question type index	
 			}
-		},		
+		},	
+		computed: {
+			testType () {
+				return this.$t('testType');  
+			},
+		},
 		methods: {	 
 			showModal: function() {
 				uni.showModal({
-					title: this.$common.language.content.testType.finishPopUp.title,
-					content: this.$common.language.content.testType.finishPopUp.content,					
-					cancelText: this.$common.language.content.testType.finishPopUp.leftButton,
-					confirmText: this.$common.language.content.testType.finishPopUp.rightButton,
+					title: this.$t('testType.finishPopUp.title'),
+					content: this.$t('testType.finishPopUp.content'),					
+					cancelText: this.$t('testType.finishPopUp.leftButton'),
+					confirmText: this.$t('testType.finishPopUp.rightButton'),
 					confirmColor: '#007AFF',
 					cancelColor: '#FF464F',
 					success: (res) => {
@@ -156,7 +161,7 @@
 				if(!this.checkedFlag && this.selectIndex !== -1) {
 					let resultInfo;
 					if(this.selectIndex === this.rightAnswerIndex) {
-						resultInfo = this.$common.language.content.testType.correctInfo;						
+						resultInfo = this.$t('testType.correctInfo');						
 						this.changeFootPartStyle('#C7F7CC','#01500F','#4CD964',resultInfo);
 						if(!this.$common.finishFlag) {
 							this.$common.score[this.$common.score.length - 1] += 10;
@@ -167,12 +172,12 @@
 					} 
 					else {
 						if(this.typeIndex === 2) {
-							this.$common.setWrongInfo(this.nameList[this.selectIndex],this.nameList[this.rightAnswerIndex],this.rightAnswerIndex + 1);
+							this.$common.setWrongInfo(this.$t('config.language'),this.nameList[this.rightAnswerIndex],this.nameList[this.selectIndex],this.rightAnswerIndex + 1);
 							// resultInfo = 'this is ' + this.nameList[this.selectIndex] + ',' + this.nameList[this.rightAnswerIndex] + ' is the ' + (this.rightAnswerIndex + 1) + ' image';						
 							resultInfo = this.$common.resultInfo;
 						}		
 						else {
-							this.$common.setWrongInfo(this.nameList[this.rightAnswerIndex]);
+							this.$common.setWrongInfo(this.$t('config.language'),this.nameList[this.rightAnswerIndex]);
 							resultInfo = this.$common.resultInfo;	
 						}
 						this.changeFootPartStyle('#F7C7C7','#510303','#FF3B30',resultInfo);			
@@ -181,14 +186,14 @@
 						}
 						this.$common.addWrongList(this.typeIndex,this.rightAnswerIndex,this.array);
 					}	
-					this.checkBoxText = this.$common.language.content.testType.continueButton;
+					this.checkBoxText = this.$t('testType.continueButton');
 					this.checkedFlag = true;
 				}
 			},			 
 			questionList: function() {	
 				if(this.typeIndex === 0) {
 					//Choose an English name according to the picture
-					this.title = this.$common.language.content.testType.titleOne;	
+					this.title = this.$t('testType.titleOne');	
 					this.imgPathList.push(this.array[this.rightAnswerIndex].img);
 					for(let i = 0;i < this.optionNumber;i++) {
 						this.nameList.push(this.array[i].englishName);
@@ -196,7 +201,7 @@
 				}
 				else if(this.typeIndex === 1) {
 					//Choose an Chinese name according to the picture
-					this.title = this.$common.language.content.testType.titleOne;	
+					this.title = this.$t('testType.titleOne');	
 					this.imgPathList.push(this.array[this.rightAnswerIndex].img);
 					for(let i = 0;i < this.optionNumber;i++) {
 						this.nameList.push(this.array[i].chineseName);
@@ -204,7 +209,7 @@
 				}
 				else if(this.typeIndex === 2) {
 					//Choose an picture according to the English name	
-					this.title = this.$common.language.content.testType.titleTwo + this.array[this.rightAnswerIndex].englishName+'?';
+					this.title = this.$t('testType.titleTwo') + this.array[this.rightAnswerIndex].englishName+'?';
 					for(let i = 0;i < this.optionNumber;i++) {
 						this.nameList.push(this.array[i].englishName);
 						this.imgPathList.push(this.array[i].img);	
@@ -216,8 +221,8 @@
 			this.typeIndex = parseInt(option.typeIndex);	
 		},
 		onShow: function() {
-			this.checkBoxText = this.$common.language.content.testType.checkButton;
-			this.$setBar.setNavigationBar(this.$common.language.content.testType.navigationBarTitleText);
+			this.checkBoxText = this.$t('testType.checkButton');
+			this.$setBar.setNavigationBar(this.$t('testType.navigationBarTitleText'));
 			if(!this.$common.finishFlag) {
 				uni.getStorage({
 					key: 'member',

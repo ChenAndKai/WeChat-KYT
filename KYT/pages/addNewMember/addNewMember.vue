@@ -5,19 +5,19 @@
 			<uni-icons type="camera" size="30" color="#808080" class="mode-camera-icon" @click="selectImg()" ></uni-icons>
 		</view>
 		<view>
-			<input type="text" :placeholder="english_Name" class="mode-input" v-model="englishName"></input>
+			<input type="text" :placeholder="memberInfo.englishName" class="mode-input" v-model="englishName"></input>
 		</view>
 		
 		<view>
-			<input type="text" :placeholder="chinese_Name" class="mode-input" v-model="chineseName"></input>
+			<input type="text" :placeholder="memberInfo.chineseName" class="mode-input" v-model="chineseName"></input>
 		</view>
 		<view>
 			<picker mode="date" v-model="birthday" :start="startDate" :end="endDate" @change="bindDateChange" color="#7f7fa0">
-				<view class="mode-input" v-if="isSelectedDate" ><text class="label">{{birth}}:</text></view>
+				<view class="mode-input" v-if="isSelectedDate" ><text class="label">{{memberInfo.birthday}}:</text></view>
 				<view class="mode-input" v-if="!isSelectedDate" ><text class="label">{{birthday}}</text> </view>
 			</picker>
 		</view>
-		<button class="mod-button" @click = "saveData()">{{button}}</button>
+		<button class="mod-button" @click = "saveData()">{{addMember.button}}</button>
 		<view class="blank"></view>
 	</view>
 </template>
@@ -37,13 +37,15 @@
 				flag: false,//Determines if the current information has been successfully saved
 				teamMembers: [],
 				isSelectedDate: true ,
-				english_Name: '',
-				chinese_Name: '',
-				birth: '',
-				button: '',
 			}
 		},
 		computed: {
+			addMember () {
+			  return this.$t('addMember');  
+			},
+			memberInfo () {
+				 return this.$t('memberInformation');
+			},
 		    startDate() {
 		        return this.getDate('start');
 		    },
@@ -58,11 +60,7 @@
 			this.teamMembers = item;
 		},
 		onShow:function(){
-			this.english_Name = this.$common.language.content.memberInformation.englishName;
-			this.chinese_Name = this.$common.language.content.memberInformation.chineseName;
-			this.birth = this.$common.language.content.memberInformation.birthday;
-			this.button = this.$common.language.content.addMember.button;
-			this.$setBar.setNavigationBar(this.$common.language.content.addMember.navigationBarTitleText);
+			this.$setBar.setNavigationBar(this.$t('addMember.navigationBarTitleText'));
 		},
 		methods: {
 			//Select a photo from the gallery or take a photo with the camera
@@ -79,10 +77,10 @@
 			},
 			saveData: function() {	
 				if(this.flag) {
-					this.showModal(this.$common.language.content.addMember.popUp.uploadedContent);
+					this.showModal(this.$t('addMember.popUp.uploadedContent'));
 				}	
 				if(this.englishName === '' || this.imgPath === '' || this.chineseName === '') {		
-					this.showModal(this.$common.language.content.addMember.popUp.emptyContent);
+					this.showModal(this.$t('addMember.popUp.emptyContent'));
 				}
 				else {
 					this.updateOrAdd();				
@@ -94,7 +92,7 @@
 					for(i = 0;i < this.teamMembers.length;i++) {
 						if(this.englishName.trim().toLocaleLowerCase() === this.teamMembers[i].chineseName|| 
 						  this.chineseName.trim() === this.teamMembers[i].chineseName) {
-							this.showModal(this.$common.language.content.addMember.popUp.existContent,false);
+							this.showModal(this.$t('addMember.popUp.existContent'),false);
 							break;
 						}									
 					}
@@ -113,7 +111,7 @@
 				uni.showModal({		
 					showCancel: false,
 					content: content,
-					confirmText: this.$common.language.content.addMember.confirm,
+					confirmText: this.$t('addMember.confirm'),
 					success: (res) => {
 						if(flag) {
 							uni.switchTab({
@@ -137,7 +135,7 @@
 					key: 'member',
 					data: jsonData,
 					success: () => {
-						this.showModal(this.$common.language.content.addMember.popUp.successContent,true);	
+						this.showModal(this.$t('addMember.popUp.successContent'),true);	
 					},
 				});
 			},

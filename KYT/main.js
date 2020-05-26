@@ -19,8 +19,14 @@ Vue.component('cmd-circle',cmdCircle)
 Vue.component('cmd-progress',cmdProgress)
 // Vue.component('test-item',testItems)
 
+
+import i18n from './lang/index' 
+Vue.prototype._i18n = i18n
+
+
 App.mpType = 'app'
 const app = new Vue({
+	i18n,
     ...App
 })
 app.$mount()

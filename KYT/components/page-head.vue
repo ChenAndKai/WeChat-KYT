@@ -12,17 +12,16 @@
 		data: function() {
 			return {
 				percent: this.$common.percent+10,
-				languagePackage: this.$common.language.content,
 			}
 		},
 		methods: {
 			shutDown: function() {
 				uni.showModal({
-					title: this.languagePackage.testType.exitPopUp.title,
-					content: this.languagePackage.testType.exitPopUp.content,
-					cancelText: this.languagePackage.testType.exitPopUp.leftButton,
+					title: this.$t('testType.exitPopUp.title'),
+					content: this.$t('testType.exitPopUp.content'),
+					cancelText: this.$t('testType.exitPopUp.leftButton'),
 					cancelColor: '#007AFF',
-					confirmText: this.languagePackage.testType.exitPopUp.rightButton,
+					confirmText: this.$t('testType.exitPopUp.rightButton'),
 					confirmColor: '#FF464F',
 					success: (res) => {
 						if (res.confirm) {

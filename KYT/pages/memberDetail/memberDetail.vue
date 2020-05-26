@@ -9,13 +9,13 @@
 			<image class="mode-avtor":src="img" mode="scaleToFill"></image>
 		</view>
 		<view class="mode-input">
-			<text>{{english_Name}}:	{{englishName}}</text>
+			<text>{{memberInfo.englishName}}:	{{englishName}}</text>
 		</view>
 		<view class="mode-input">
-			<text>{{chinese_Name}}:	{{chineseName}}</text>
+			<text>{{memberInfo.chineseName}}:	{{chineseName}}</text>
 		</view>
 		<view class="mode-input">
-			<text>{{birth}}:	{{birthday}}</text>
+			<text>{{memberInfo.birthday}}:	{{birthday}}</text>
 		</view>
 		<view class="blank"></view>
 	</view>
@@ -25,9 +25,6 @@
 	export default {
 		data() {
 			return {
-				english_Name: '',
-				chinese_Name: '',
-				birth: '',
 				englishName: '',
 				chineseName: '',
 				teamMembersInfo: '',
@@ -35,6 +32,14 @@
 				index: 0,
 				birthday: '',
 			}
+		},
+		computed: {
+			addMember () {
+				return this.$t('addMember');  
+			},
+			memberInfo () {
+				return this.$t('memberInformation');
+			},
 		},
 		onLoad:function(option){
 			this.englishName = option.englishName;
@@ -50,21 +55,16 @@
 				}
 			}
 			uni.setNavigationBarTitle({
-				title:this.englishName
+				title: this.englishName
 			})
 		}, 
-		onShow:function(){
-			this.english_Name = this.$common.language.content.memberInformation.englishName;
-			this.chinese_Name = this.$common.language.content.memberInformation.chineseName;
-			this.birth = this.$common.language.content.memberInformation.birthday;
-		},
 		methods: {
 			delMember: function() {
 				uni.showModal({
-					title: this.$common.language.content.memberDetail.popUp.title,
-					content: this.$common.language.content.memberDetail.popUp.content,					
-					cancelText: this.$common.language.content.memberDetail.popUp.exit,
-					confirmText: this.$common.language.content.memberDetail.popUp.confirm,
+					title: this.$t('memberDetail.popUp.title'),
+					content: this.$t('memberDetail.popUp.content'),					
+					cancelText: this.$t('memberDetail.popUp.exit'),
+					confirmText: this.$t('memberDetail.popUp.confirm'),
 					confirmColor: '#007AFF',
 					cancelColor: '#FF464F',
 					success: (res) => {
