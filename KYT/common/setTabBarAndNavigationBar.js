@@ -1,6 +1,4 @@
 const setTabBar = (test,index,config) => {
-	console.log(test);
-	console.log(index);
 	uni.setTabBarItem({
 	  index: 0,
 	  text: test,

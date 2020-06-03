@@ -33,13 +33,14 @@ export default {
 	"test": {
 		"navigationBarTitleText": "Test",
 		"tabBarText": "Test",
-		"firstContent": "You haven\"t take any tests yet",
+		"firstContent": "You haven't take any tests yet",
 		"button": "Start A New Test",
 		"infoOne": "You've got",
 		"infoTwo": "Average Score",
 		"nickName": "Score",
 	},
 	"testType": {
+		"navigationBarTitleText": "Test",
 		"titleOne": "Who is this?",
 		"titleTwo": "Who is ",
 		"checkButton": "Check",

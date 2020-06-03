@@ -88,7 +88,7 @@
 				this.$common.finishFlag = false;
 				this.$common.initWrongList();
 				let typeIndex =  Math.floor((Math.random() * 3));
-				uni.redirectTo({
+				uni.reLaunch({
 					url: 'testType?typeIndex=' + typeIndex,
 				})
 			},

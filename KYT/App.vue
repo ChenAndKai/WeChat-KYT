@@ -1,7 +1,7 @@
 <script>
 	export default {
 		onLaunch: function() {	
-			this.updateManager();
+			//this.updateManager();
 		},
 		onShow: function() {
 		},

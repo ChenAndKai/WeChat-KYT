@@ -40,6 +40,7 @@ export default {
 		"nickName": "分数"
 	},
 	"testType": {
+		"navigationBarTitleText": "测试",
 		"titleOne": "这是谁?",
 		"titleTwo": "谁是 ",
 		"checkButton": "检查",

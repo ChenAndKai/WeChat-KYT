@@ -1,10 +1,10 @@
 <template>
 	<view >
-		<navigator class=".container-plus" :url="'../addNewMember/addNewMember?teamMembers='+ encodeURIComponent(JSON.stringify(this.teamMembersInfo))">
+		<navigator class=".container-plus" :url="'../addNewMember/addNewMember?teamMembers='+ encodeURIComponent(JSON.stringify(teamMembersInfo))">
 			<uni-icons type="plusempty" size="30" color="#1a87ff" class="mode-plus" ></uni-icons>
 		</navigator>
 		<view  v-for="(item,index) in teamMembersInfo" >		
-			<navigator :url="'../memberDetail/memberDetail?teamMembers='+ encodeURIComponent(JSON.stringify(this.teamMembersInfo))+'&englishName='+item.englishName " class="mod-item">
+			<navigator :url="'../memberDetail/memberDetail?teamMembers='+ encodeURIComponent(JSON.stringify(teamMembersInfo))+'&englishName='+item.englishName " class="mod-item">
 				<view class="mod-img" style="mode-member-image-show">
 					<image :src="item.img" class="mode-image" ></image>
 					<text class="member-mod-show">{{item.englishName}}</text>  
